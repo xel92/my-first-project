@@ -8,10 +8,11 @@ const queue = [];
 let playing = false;
 
 const timing = Object.freeze({
-  wake: 1250,
-  cloudIn: 650,
-  hold: 5000,
-  sleep: 1350,
+  wake: 1650,
+  roar: 850,
+  cloudIn: 800,
+  hold: 5200,
+  sleep: 1650,
 });
 
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -28,12 +29,13 @@ function normalizeName(value) {
 
 function fitNickname() {
   const scale = Math.min(widget.clientWidth / 1200, 1);
-  let size = Math.round(48 * scale);
-  const minimum = Math.max(14, Math.round(16 * scale));
-  nickname.style.fontSize = `${size}px`;
-  while (nickname.scrollWidth > nickname.clientWidth && size > minimum) {
-    nickname.style.fontSize = `${--size}px`;
-  }
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const style = getComputedStyle(nickname);
+  context.font = `900 100px ${style.fontFamily}`;
+  const measured = context.measureText(nickname.textContent).width || 1;
+  const available = nickname.clientWidth * .93;
+  nickname.style.fontSize = `${Math.min(76 * scale, available / measured * 100)}px`;
 }
 
 async function playFollowerAlert(followerName) {
@@ -41,12 +43,19 @@ async function playFollowerAlert(followerName) {
   nickname.textContent = safeName;
   fitNickname();
 
+  setState('is-lifting', `Дракон открывает глаза…`);
+  await wait(1000);
   setState('is-waking', `Дракон просыпается для ${safeName}…`);
   await wait(timing.wake);
 
-  setState('is-alert', `${safeName} только что зафолловился!`);
+  setState('is-roaring', `Дракон приветствует ${safeName}!`);
+  await wait(timing.roar);
+
+  setState('is-alert', `${safeName} — добро пожаловать в стаю!`);
   await wait(timing.cloudIn + timing.hold);
 
+  setState('is-lowering', 'Дракон опускает голову…');
+  await wait(1100);
   setState('is-sleeping-down', 'Дракон снова укладывается спать…');
   await wait(timing.sleep);
 
@@ -85,3 +94,6 @@ if (params.has('overlay') || params.has('obs')) document.body.classList.add('ove
 if (params.has('demo')) setTimeout(() => triggerFollower(params.get('demo')), 500);
 
 window.dragonAlert = triggerFollower;
+window.addEventListener('resize', fitNickname);
+document.fonts?.ready.then(fitNickname);
+statusText.textContent = 'Готово. Введите имя и нажмите «Новый фолловер».';

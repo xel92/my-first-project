@@ -11,8 +11,14 @@
       <section id="widget" class="widget is-sleeping" aria-live="polite">
         <div class="dragon-stage">
           <img class="dragon dragon--sleep" src="assets/dragon-sleep.png" alt="Спящий дракон" />
-          <img class="dragon dragon--alert" src="assets/dragon-alert.png" alt="Проснувшийся дракон" />
-          <div class="nickname-wrap"><span id="nickname" class="nickname"></span></div>
+          <img class="dragon dragon--middle" src="assets/dragon-drowsy.png" alt="" />
+          <img class="dragon dragon--alert" src="assets/dragon-awake.png" alt="Проснувшийся дракон" />
+          <img class="follower-cloud" src="assets/follower-cloud.png" alt="" />
+          <div class="nickname-wrap">
+            <span id="nickname" class="nickname"></span>
+            <span class="greeting">Добро пожаловать в стаю!</span>
+          </div>
+          <div class="roar-lines" aria-hidden="true"><i></i><i></i><i></i></div>
           <span class="sleep-mark sleep-mark--one">z</span>
           <span class="sleep-mark sleep-mark--two">z</span>
           <span class="sleep-mark sleep-mark--three">z</span>
@@ -25,7 +31,7 @@
           <input id="name" value="DragonFriend_2026" maxlength="50" autocomplete="off" />
           <button type="submit">Новый фолловер</button>
         </div>
-        <p id="status">Дракон спит. Нажмите кнопку, чтобы проверить уведомление.</p>
+        <p id="status">JavaScript не запущен. Скачайте HTML и откройте сохранённый файл в Chrome, Edge или Firefox — встроенный предпросмотр может блокировать кнопки.</p>
       </form>
     </main>
     <script src="app.js"></script>

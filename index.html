@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dragon Follower Alert</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="preview">
+      <section id="widget" class="widget is-sleeping" aria-live="polite">
+        <div class="dragon-stage">
+          <img class="dragon dragon--sleep" src="assets/dragon-sleep.png" alt="Спящий дракон" />
+          <img class="dragon dragon--alert" src="assets/dragon-alert.png" alt="Проснувшийся дракон" />
+          <div class="nickname-wrap"><span id="nickname" class="nickname"></span></div>
+          <span class="sleep-mark sleep-mark--one">z</span>
+          <span class="sleep-mark sleep-mark--two">z</span>
+          <span class="sleep-mark sleep-mark--three">z</span>
+        </div>
+      </section>
+
+      <form id="controls" class="controls">
+        <label for="name">Тестовый никнейм</label>
+        <div class="controls__row">
+          <input id="name" value="DragonFriend_2026" maxlength="50" autocomplete="off" />
+          <button type="submit">Новый фолловер</button>
+        </div>
+        <p id="status">Дракон спит. Нажмите кнопку, чтобы проверить уведомление.</p>
+      </form>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

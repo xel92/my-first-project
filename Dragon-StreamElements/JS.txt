@@ -1,0 +1,103 @@
+const widget = document.querySelector('#widget');
+const nickname = document.querySelector('#nickname');
+const controls = document.querySelector('#controls');
+const nameInput = document.querySelector('#name');
+const statusText = document.querySelector('#status');
+
+const queue = [];
+let playing = false;
+
+const timing = Object.freeze({
+  wake: 1650,
+  roar: 850,
+  cloudIn: 800,
+  hold: 5200,
+  sleep: 1650,
+});
+
+const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+function setState(state, message) {
+  widget.className = `widget ${state}`;
+  if (statusText && message) statusText.textContent = message;
+}
+
+function normalizeName(value) {
+  const clean = String(value ?? '').replace(/[<>]/g, '').trim();
+  return clean.slice(0, 50) || 'Новый фолловер';
+}
+
+function fitNickname() {
+  const scale = Math.min(widget.clientWidth / 1200, 1);
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const style = getComputedStyle(nickname);
+  context.font = `900 100px ${style.fontFamily}`;
+  const measured = context.measureText(nickname.textContent).width || 1;
+  const available = nickname.clientWidth * .93;
+  nickname.style.fontSize = `${Math.min(76 * scale, available / measured * 100)}px`;
+}
+
+async function playFollowerAlert(followerName) {
+  const safeName = normalizeName(followerName);
+  nickname.textContent = safeName;
+  fitNickname();
+
+  setState('is-lifting', `Дракон открывает глаза…`);
+  await wait(1000);
+  setState('is-waking', `Дракон просыпается для ${safeName}…`);
+  await wait(timing.wake);
+
+  setState('is-roaring', `Дракон приветствует ${safeName}!`);
+  await wait(timing.roar);
+
+  setState('is-alert', `${safeName} — добро пожаловать в стаю!`);
+  await wait(timing.cloudIn + timing.hold);
+
+  setState('is-lowering', 'Дракон опускает голову…');
+  await wait(1100);
+  setState('is-sleeping-down', 'Дракон снова укладывается спать…');
+  await wait(timing.sleep);
+
+  setState('is-sleeping', 'Дракон спит. Можно запустить следующую проверку.');
+}
+
+async function drainQueue() {
+  if (playing) return;
+  playing = true;
+  while (queue.length) await playFollowerAlert(queue.shift());
+  playing = false;
+}
+
+function triggerFollower(name) {
+  queue.push(normalizeName(name));
+  drainQueue();
+}
+
+controls?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  triggerFollower(nameInput.value);
+});
+
+
+let fields = {};
+window.addEventListener('onWidgetLoad', (message) => {
+  fields = message.detail?.fieldData || {};
+  document.querySelectorAll('[data-image-field]').forEach(image => {
+    const url = fields[image.dataset.imageField];
+    if (typeof url === 'string' && url) image.src = url;
+  });
+  document.querySelector('.greeting').textContent = fields.greetingText || 'Добро пожаловать в стаю!';
+  fitNickname();
+});
+window.addEventListener('onEventReceived', (message) => {
+  const detail = message.detail || {};
+  const event = detail.event || {};
+  if (detail.listener === 'follower-latest') {
+    triggerFollower(event.displayName || event.name || 'Новый фолловер');
+  } else if (detail.listener === 'widget-button' && event.field === 'testFollower') {
+    triggerFollower(fields.testName || 'DragonFriend_2026');
+  }
+});
+window.addEventListener('resize', fitNickname);
+document.fonts?.ready.then(fitNickname);

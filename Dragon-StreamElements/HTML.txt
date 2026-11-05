@@ -1,0 +1,27 @@
+<main class="preview">
+      <section id="widget" class="widget is-sleeping" aria-live="polite">
+        <div class="dragon-stage">
+          <img class="dragon dragon--sleep" data-image-field="sleepImage" alt="Спящий дракон" />
+          <img class="dragon dragon--middle" data-image-field="middleImage" alt="" />
+          <img class="dragon dragon--alert" data-image-field="awakeImage" alt="Проснувшийся дракон" />
+          <img class="follower-cloud" data-image-field="cloudImage" alt="" />
+          <div class="nickname-wrap">
+            <span id="nickname" class="nickname"></span>
+            <span class="greeting">Добро пожаловать в стаю!</span>
+          </div>
+          <div class="roar-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span class="sleep-mark sleep-mark--one">z</span>
+          <span class="sleep-mark sleep-mark--two">z</span>
+          <span class="sleep-mark sleep-mark--three">z</span>
+        </div>
+      </section>
+
+      <form id="controls" class="controls">
+        <label for="name">Тестовый никнейм</label>
+        <div class="controls__row">
+          <input id="name" value="DragonFriend_2026" maxlength="50" autocomplete="off" />
+          <button type="submit">Новый фолловер</button>
+        </div>
+        <p id="status">JavaScript не запущен. Скачайте HTML и откройте сохранённый файл в Chrome, Edge или Firefox — встроенный предпросмотр может блокировать кнопки.</p>
+      </form>
+    </main>

@@ -1,0 +1,41 @@
+{
+  "sleepImage": {
+    "type": "image-input",
+    "label": "dragon-sleep.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "middleImage": {
+    "type": "image-input",
+    "label": "dragon-drowsy.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "awakeImage": {
+    "type": "image-input",
+    "label": "dragon-awake.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "cloudImage": {
+    "type": "image-input",
+    "label": "follower-cloud.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "greetingText": {
+    "type": "text",
+    "label": "Приветствие",
+    "value": "Добро пожаловать в стаю!"
+  },
+  "testName": {
+    "type": "text",
+    "label": "Тестовый никнейм",
+    "value": "DragonFriend_2026"
+  },
+  "testFollower": {
+    "type": "button",
+    "label": "Проверить нового фолловера",
+    "value": "Запустить"
+  }
+}

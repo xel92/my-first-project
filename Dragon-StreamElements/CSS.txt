@@ -4,7 +4,7 @@
 }
 
 /* Eight poses, with short overlapping dissolves in both directions. */
-.widget .dragon { opacity: 0 !important; transition: opacity .21s ease-in-out !important; }
+.widget .dragon { opacity: 0 !important; transition: opacity .07s ease-in-out !important; }
 .widget .dragon[class*="dragon--step"] { width: 100%; left: 0; bottom: 0; }
 .widget:not([data-pose]) .dragon--sleep,
 .widget[data-pose="sleep"] .dragon--sleep,
@@ -89,7 +89,7 @@ body {
   transform: translate(0, 0) scale(1) rotate(0);
 }
 
-.widget.is-roaring .dragon--alert { animation: roar .08s ease-in-out 5; }
+.widget.is-roaring .dragon--alert { animation: roar .026666667s ease-in-out 5; }
 .widget.is-alert .dragon--alert { animation: alertAlive 2.1s ease-in-out infinite; }
 
 .widget.is-sleeping-down .dragon--alert {
@@ -202,7 +202,7 @@ body {
 .roar-lines i:nth-child(1) { transform: rotate(-35deg) translateX(10%); }
 .roar-lines i:nth-child(2) { transform: rotate(0deg) translateX(18%); }
 .roar-lines i:nth-child(3) { transform: rotate(35deg) translateX(10%); }
-.widget.is-roaring .roar-lines { animation: roarLines .4s ease-out both; }
+.widget.is-roaring .roar-lines { animation: roarLines .133333333s ease-out both; }
 
 .sleep-mark {
   position: absolute;
@@ -243,6 +243,7 @@ body {
 .controls p { margin: 10px 0 0; color: #9fb5ad; font-size: 14px; }
 
 body.overlay { background: transparent; }
+html:has(body.overlay) { background: transparent; color-scheme: normal; }
 body.overlay .preview { display: block; padding: 0; }
 body.overlay .widget { width: 100vw; height: 100vh; aspect-ratio: auto; }
 body.overlay .controls { display: none; }

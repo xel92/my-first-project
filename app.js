@@ -39,9 +39,9 @@ function playFollowerSound() {
 }
 
 const timing = Object.freeze({
-  pose: 210,
-  loweringPause: 325,
-  roar: 425,
+  pose: 210 / 3,
+  loweringPause: 325 / 3,
+  roar: 425 / 3,
   cloudIn: 800,
   hold: 5200,
 });

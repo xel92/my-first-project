@@ -2,15 +2,15 @@
   const origin = 'https://xel92.github.io';
   const frame = document.getElementById('dragon-live');
   let ready = false;
-  let configuration = null;
+  let configuration = {fieldData:{}};
+  let targetOrigin = origin;
   const pending = [];
   function send(type, detail) {
-    frame.contentWindow.postMessage({channel:'dragon-se-v1', type, detail}, origin);
+    frame.contentWindow.postMessage({channel:'dragon-se-v1', type, detail}, targetOrigin);
   }
   window.addEventListener('onWidgetLoad', event => {
     // Forward settings only; no channel/session credentials are needed.
     configuration = {fieldData: event.detail?.fieldData || {}};
-    if (ready) send('onWidgetLoad', configuration);
   });
   window.addEventListener('onEventReceived', event => {
     const detail = event.detail || {};
@@ -26,9 +26,15 @@
   }
   window.addEventListener('onWidgetLoad', flush);
   window.addEventListener('message', event => {
-    if(event.source !== frame.contentWindow || event.origin !== origin || event.data?.channel !== 'dragon-se-v1' || event.data.type !== 'ready') return;
+    if(event.source !== frame.contentWindow || ![origin, 'null'].includes(event.origin) || event.data?.channel !== 'dragon-se-v1' || event.data.type !== 'ready') return;
+    // A sandboxed StreamElements frame may have an opaque origin.
+    // The source window must still be our own iframe.
+    targetOrigin = event.origin === 'null' ? '*' : origin;
     ready = true;
     flush();
+  });
+  frame.addEventListener('load', () => {
+    frame.contentWindow.postMessage({channel:'dragon-se-v1', type:'connect'}, '*');
   });
   frame.src = origin + '/my-first-project/?overlay=1&se=1&v=' + Date.now();
 })();

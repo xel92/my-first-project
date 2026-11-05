@@ -141,12 +141,20 @@ const params = new URLSearchParams(location.search);
 if (params.has('overlay') || params.has('obs')) document.body.classList.add('overlay');
 if (params.has('demo')) setTimeout(() => triggerFollower(params.get('demo')), 500);
 if (params.has('se') && window.parent !== window) {
+  let connected = false;
+  const announce = () => window.parent.postMessage({channel:'dragon-se-v1', type:'ready'}, '*');
   window.addEventListener('message', (message) => {
     if (message.source !== window.parent || message.data?.channel !== 'dragon-se-v1') return;
+    if (message.data.type === 'connect') { announce(); return; }
     if (!['onWidgetLoad', 'onEventReceived'].includes(message.data.type)) return;
+    connected = true;
     window.dispatchEvent(new CustomEvent(message.data.type, {detail: message.data.detail}));
   });
-  window.parent.postMessage({channel:'dragon-se-v1', type:'ready'}, '*');
+  announce();
+  const handshake = setInterval(() => {
+    if (connected) clearInterval(handshake);
+    else announce();
+  }, 1000);
 }
 
 window.dragonAlert = triggerFollower;

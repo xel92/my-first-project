@@ -82,5 +82,99 @@
     "type": "button",
     "label": "Проверить нового фолловера",
     "value": "Запустить"
+  },
+  "nicknameFont": {
+    "type": "dropdown",
+    "label": "Шрифт",
+    "group": "Оформление никнейма",
+    "value": "Trebuchet MS, sans-serif",
+    "options": {
+      "Trebuchet MS, sans-serif": "Trebuchet MS",
+      "Arial, sans-serif": "Arial",
+      "Verdana, sans-serif": "Verdana",
+      "Georgia, serif": "Georgia",
+      "Times New Roman, serif": "Times New Roman",
+      "Courier New, monospace": "Courier New",
+      "Comic Sans MS, cursive": "Comic Sans MS"
+    }
+  },
+  "nicknameSize": {
+    "type": "slider",
+    "label": "Размер (px при ширине виджета 1200)",
+    "group": "Оформление никнейма",
+    "value": 76,
+    "min": 8,
+    "max": 120,
+    "step": 1
+  },
+  "nicknameColor": {
+    "type": "colorpicker",
+    "label": "Цвет",
+    "group": "Оформление никнейма",
+    "value": "#355f58"
+  },
+  "nicknameWeight": {
+    "type": "dropdown",
+    "label": "Жирность",
+    "group": "Оформление никнейма",
+    "value": "900",
+    "options": {
+      "400": "Обычный",
+      "700": "Жирный",
+      "900": "Очень жирный"
+    }
+  },
+  "nicknameItalic": {
+    "type": "checkbox",
+    "label": "Курсив",
+    "group": "Оформление никнейма",
+    "value": false
+  },
+  "greetingFont": {
+    "type": "dropdown",
+    "label": "Шрифт",
+    "group": "Оформление приветствия",
+    "value": "Trebuchet MS, sans-serif",
+    "options": {
+      "Trebuchet MS, sans-serif": "Trebuchet MS",
+      "Arial, sans-serif": "Arial",
+      "Verdana, sans-serif": "Verdana",
+      "Georgia, serif": "Georgia",
+      "Times New Roman, serif": "Times New Roman",
+      "Courier New, monospace": "Courier New",
+      "Comic Sans MS, cursive": "Comic Sans MS"
+    }
+  },
+  "greetingSize": {
+    "type": "slider",
+    "label": "Размер (px при ширине виджета 1200)",
+    "group": "Оформление приветствия",
+    "value": 22,
+    "min": 8,
+    "max": 120,
+    "step": 1
+  },
+  "greetingColor": {
+    "type": "colorpicker",
+    "label": "Цвет",
+    "group": "Оформление приветствия",
+    "value": "#8b663b"
+  },
+  "greetingWeight": {
+    "type": "dropdown",
+    "label": "Жирность",
+    "group": "Оформление приветствия",
+    "value": "900",
+    "options": {
+      "400": "Обычный",
+      "700": "Жирный",
+      "900": "Очень жирный"
+    }
+  },
+  "greetingItalic": {
+    "type": "checkbox",
+    "label": "Курсив",
+    "group": "Оформление приветствия",
+    "value": false
   }
 }

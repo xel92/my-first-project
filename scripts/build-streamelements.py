@@ -33,6 +33,7 @@ window.addEventListener('onWidgetLoad', (message) => {
     if (typeof url === 'string' && url) image.src = url;
   });
   document.querySelector('.greeting').textContent = fields.greetingText || 'Добро пожаловать в стаю!';
+  configureFollowerText(fields);
   fitNickname();
 });
 window.addEventListener('onEventReceived', (message) => {
@@ -57,6 +58,14 @@ fields.update({
     'testName': {'type': 'text', 'label': 'Тестовый никнейм', 'value': 'DragonFriend_2026'},
     'testFollower': {'type': 'button', 'label': 'Проверить нового фолловера', 'value': 'Запустить'},
 })
+for prefix, group, size, color in [('nickname', 'Оформление никнейма', 76, '#355f58'), ('greeting', 'Оформление приветствия', 22, '#8b663b')]:
+    fields.update({
+        prefix + 'Font': {'type': 'dropdown', 'label': 'Шрифт', 'group': group, 'value': 'Trebuchet MS, sans-serif', 'options': {'Trebuchet MS, sans-serif': 'Trebuchet MS', 'Arial, sans-serif': 'Arial', 'Verdana, sans-serif': 'Verdana', 'Georgia, serif': 'Georgia', 'Times New Roman, serif': 'Times New Roman', 'Courier New, monospace': 'Courier New', 'Comic Sans MS, cursive': 'Comic Sans MS'}},
+        prefix + 'Size': {'type': 'slider', 'label': 'Размер (px при ширине виджета 1200)', 'group': group, 'value': size, 'min': 8, 'max': 120, 'step': 1},
+        prefix + 'Color': {'type': 'colorpicker', 'label': 'Цвет', 'group': group, 'value': color},
+        prefix + 'Weight': {'type': 'dropdown', 'label': 'Жирность', 'group': group, 'value': '900', 'options': {'400': 'Обычный', '700': 'Жирный', '900': 'Очень жирный'}},
+        prefix + 'Italic': {'type': 'checkbox', 'label': 'Курсив', 'group': group, 'value': False},
+    })
 files = {'HTML.txt': html, 'CSS.txt': css, 'JS.txt': js, 'FIELDS.json': json.dumps(fields, ensure_ascii=False, indent=2), 'DATA.json': '{}', 'HTML-embedded.txt': embedded}
 files['ИНСТРУКЦИЯ.txt'] = '''УСТАНОВКА В STREAMELEMENTS
 
@@ -94,6 +103,13 @@ ZIP не импортируется целиком: его нужно распа
 Длинный файл останавливается, когда дракон засыпает. События в очереди
 получают свой звук при начале анимации, без наложения.
 Если звук не слышен, проверьте микшер OBS и разрешение браузера на аудио.
+ОФОРМЛЕНИЕ ТЕКСТА
+Разделы «Оформление никнейма» и «Оформление приветствия»: шрифт,
+размер, цвет, жирность и курсив задаются независимо. Размер — максимум;
+длинные строки автоматически уменьшаются, чтобы помещаться в облачке.
+Шрифты используются из системы браузера OBS; если выбранного шрифта
+нет на компьютере, браузер подставит запасной шрифт.
+Сохраните настройки через Done → Save.
 ОБНОВЛЕНИЕ: замените JS и FIELDS, DATA не очищайте — там настройки.
 Анимация использует восемь поз с переходами.
 Названия пунктов интерфейса могут отличаться в разных версиях SE.

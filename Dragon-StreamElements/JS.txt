@@ -6,6 +6,18 @@ const statusText = document.querySelector('#status');
 
 const queue = [];
 let playing = false;
+let textSettings = {};
+
+function configureFollowerText(settings = {}) {
+  textSettings = settings;
+  for (const [prefix, element] of [['nickname', nickname], ['greeting', document.querySelector('.greeting')]]) {
+    element.style.fontFamily = settings[prefix + 'Font'] || 'Trebuchet MS, sans-serif';
+    element.style.fontWeight = settings[prefix + 'Weight'] || '900';
+    element.style.fontStyle = settings[prefix + 'Italic'] === true || settings[prefix + 'Italic'] === 'true' ? 'italic' : 'normal';
+    element.style.color = settings[prefix + 'Color'] || (prefix === 'nickname' ? '#355f58' : '#8b663b');
+  }
+  fitNickname();
+}
 const followerAudio = new Audio();
 followerAudio.preload = 'auto';
 let soundEnabled = false;
@@ -48,13 +60,17 @@ function normalizeName(value) {
 
 function fitNickname() {
   const scale = Math.min(widget.clientWidth / 1200, 1);
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  const style = getComputedStyle(nickname);
-  context.font = `900 100px ${style.fontFamily}`;
-  const measured = context.measureText(nickname.textContent).width || 1;
-  const available = nickname.clientWidth * .93;
-  nickname.style.fontSize = `${Math.min(76 * scale, available / measured * 100)}px`;
+  for (const [prefix, element, fallback] of [['nickname', nickname, 76], ['greeting', document.querySelector('.greeting'), 22]]) {
+    const context = document.createElement('canvas').getContext('2d');
+    const style = getComputedStyle(element);
+    context.font = `${style.fontStyle} ${style.fontWeight} 100px ${style.fontFamily}`;
+    const metrics = context.measureText(element.textContent);
+    const measured = Math.max(metrics.width, (metrics.actualBoundingBoxLeft || 0) + (metrics.actualBoundingBoxRight || 0), 1);
+    const available = nickname.clientWidth * .9;
+    const requested = Number(textSettings[prefix + 'Size'] ?? fallback);
+    const size = Number.isFinite(requested) ? Math.max(8, Math.min(120, requested)) : fallback;
+    element.style.fontSize = `${Math.min(size * scale, available / measured * 100)}px`;
+  }
 }
 
 async function playFollowerAlert(followerName) {
@@ -113,6 +129,7 @@ window.addEventListener('onWidgetLoad', (message) => {
     if (typeof url === 'string' && url) image.src = url;
   });
   document.querySelector('.greeting').textContent = fields.greetingText || 'Добро пожаловать в стаю!';
+  configureFollowerText(fields);
   fitNickname();
 });
 window.addEventListener('onEventReceived', (message) => {

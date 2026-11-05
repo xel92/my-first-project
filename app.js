@@ -43,10 +43,11 @@ async function playFollowerAlert(followerName) {
   nickname.textContent = safeName;
   fitNickname();
 
-  setState('is-lifting', `Дракон открывает глаза…`);
-  await wait(1000);
   setState('is-waking', `Дракон просыпается для ${safeName}…`);
-  await wait(timing.wake);
+  for (const pose of ['step1', 'middle', 'step2', 'step3', 'step4', 'step5', 'alert']) {
+    widget.dataset.pose = pose;
+    await wait(420);
+  }
 
   setState('is-roaring', `Дракон приветствует ${safeName}!`);
   await wait(timing.roar);
@@ -55,9 +56,11 @@ async function playFollowerAlert(followerName) {
   await wait(timing.cloudIn + timing.hold);
 
   setState('is-lowering', 'Дракон опускает голову…');
-  await wait(1100);
-  setState('is-sleeping-down', 'Дракон снова укладывается спать…');
-  await wait(timing.sleep);
+  await wait(650);
+  for (const pose of ['step5', 'step4', 'step3', 'step2', 'middle', 'step1', 'sleep']) {
+    widget.dataset.pose = pose;
+    await wait(420);
+  }
 
   setState('is-sleeping', 'Дракон спит. Можно запустить следующую проверку.');
 }

@@ -23,6 +23,36 @@
     "value": "",
     "group": "Изображения дракона"
   },
+  "step1Image": {
+    "type": "image-input",
+    "label": "dragon-step1.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "step2Image": {
+    "type": "image-input",
+    "label": "dragon-step2.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "step3Image": {
+    "type": "image-input",
+    "label": "dragon-step3.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "step4Image": {
+    "type": "image-input",
+    "label": "dragon-step4.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
+  "step5Image": {
+    "type": "image-input",
+    "label": "dragon-step5.png",
+    "value": "",
+    "group": "Изображения дракона"
+  },
   "greetingText": {
     "type": "text",
     "label": "Приветствие",

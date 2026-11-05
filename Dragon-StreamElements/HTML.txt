@@ -3,6 +3,11 @@
         <div class="dragon-stage">
           <img class="dragon dragon--sleep" data-image-field="sleepImage" alt="Спящий дракон" />
           <img class="dragon dragon--middle" data-image-field="middleImage" alt="" />
+          <img class="dragon dragon--step1" data-image-field="step1Image" alt="" />
+          <img class="dragon dragon--step2" data-image-field="step2Image" alt="" />
+          <img class="dragon dragon--step3" data-image-field="step3Image" alt="" />
+          <img class="dragon dragon--step4" data-image-field="step4Image" alt="" />
+          <img class="dragon dragon--step5" data-image-field="step5Image" alt="" />
           <img class="dragon dragon--alert" data-image-field="awakeImage" alt="Проснувшийся дракон" />
           <img class="follower-cloud" data-image-field="cloudImage" alt="" />
           <div class="nickname-wrap">

@@ -9,11 +9,13 @@ page = (root / 'index.html').read_text()
 html = page[page.index('<main'):page.index('</main>') + 7]
 images = {'sleepImage': 'dragon-sleep.png', 'middleImage': 'dragon-drowsy.png', 'awakeImage': 'dragon-awake.png', 'cloudImage': 'follower-cloud.png'}
 embedded = html
+images.update({f'step{i}Image': f'dragon-step{i}.png' for i in range(1, 6)})
 for key, filename in images.items():
     embedded = embedded.replace('assets/' + filename, 'data:image/png;base64,' + base64.b64encode((root / 'assets' / filename).read_bytes()).decode())
     html = html.replace('src="assets/' + filename + '"', 'data-image-field="' + key + '"')
 css = (root / 'styles.css').read_text() + '''
 /* StreamElements: transparent overlay, no preview controls. */
+:root { color-scheme: normal !important; }
 html, body { background: transparent !important; width: 100%; height: 100%; }
 .preview { display: block; padding: 0; min-height: 0; }
 .widget { width: 100vw; height: 100vh; aspect-ratio: auto; }
@@ -62,7 +64,7 @@ files['ИНСТРУКЦИЯ.txt'] = '''УСТАНОВКА В STREAMELEMENTS
    HTML ← HTML.txt, CSS ← CSS.txt, JS ← JS.txt,
    FIELDS ← FIELDS.json, DATA ← DATA.json. Нажмите Done.
 5. В настройках виджета откройте «Изображения дракона».
-   В каждом из четырёх полей загрузите соответствующий PNG из assets.
+   В каждом из девяти полей загрузите соответствующий PNG из assets.
    Имена полей совпадают с именами файлов. Это загрузка в медиатеку SE.
 6. Задайте размер самого Custom Widget 1200 × 600, расположите на overlay.
 7. Введите тестовый ник и нажмите «Проверить нового фолловера».
@@ -71,16 +73,16 @@ files['ИНСТРУКЦИЯ.txt'] = '''УСТАНОВКА В STREAMELEMENTS
    вставьте URL, задайте 1920 × 1080 и 60 FPS.
 
 ZIP не импортируется целиком: его нужно распаковать, вставить текст
-в пять вкладок редактора и загрузить четыре картинки.
+в пять вкладок редактора и загрузить девять картинок.
 
 Необязательный вариант: HTML-embedded.txt вместо HTML.txt содержит
-встроенные картинки, поэтому шаг 5 не нужен. Он большой (~4 МБ);
+встроенные картинки, поэтому шаг 5 не нужен. Он большой;
 если редактор не сохраняет его, используйте обычный HTML.txt и медиатеку.
 
 На настоящего фолловера реагирует событие follower-latest.
 Повторные уведомления стоят в очереди. Ник выводится безопасно как текст.
 Полностью появившееся облачко держится 5,2 секунды.
-Рык визуальный, без звука. Анимация использует три позы с переходами.
+Рык визуальный, без звука. Анимация использует восемь поз с переходами.
 Названия пунктов интерфейса могут отличаться в разных версиях SE.
 Не публикуйте URL своего overlay: используйте его только в OBS.
 '''

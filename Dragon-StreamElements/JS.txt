@@ -39,11 +39,11 @@ function playFollowerSound() {
 }
 
 const timing = Object.freeze({
-  wake: 1650,
-  roar: 850,
+  pose: 210,
+  loweringPause: 325,
+  roar: 425,
   cloudIn: 800,
   hold: 5200,
-  sleep: 1650,
 });
 
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -82,7 +82,7 @@ async function playFollowerAlert(followerName) {
   setState('is-waking', `Дракон просыпается для ${safeName}…`);
   for (const pose of ['step1', 'middle', 'step2', 'step3', 'step4', 'step5', 'alert']) {
     widget.dataset.pose = pose;
-    await wait(420);
+    await wait(timing.pose);
   }
 
   setState('is-roaring', `Дракон приветствует ${safeName}!`);
@@ -92,10 +92,10 @@ async function playFollowerAlert(followerName) {
   await wait(timing.cloudIn + timing.hold);
 
   setState('is-lowering', 'Дракон опускает голову…');
-  await wait(650);
+  await wait(timing.loweringPause);
   for (const pose of ['step5', 'step4', 'step3', 'step2', 'middle', 'step1', 'sleep']) {
     widget.dataset.pose = pose;
-    await wait(420);
+    await wait(timing.pose);
   }
 
   setState('is-sleeping', 'Дракон спит. Можно запустить следующую проверку.');

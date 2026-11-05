@@ -243,6 +243,7 @@ body {
 .controls p { margin: 10px 0 0; color: #9fb5ad; font-size: 14px; }
 
 body.overlay { background: transparent; }
+html:has(body.overlay) { background: transparent; color-scheme: normal; }
 body.overlay .preview { display: block; padding: 0; }
 body.overlay .widget { width: 100vw; height: 100vh; aspect-ratio: auto; }
 body.overlay .controls { display: none; }

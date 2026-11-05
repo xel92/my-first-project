@@ -29,10 +29,17 @@ jobs:
         with:
           enablement: true
 
+      - name: Prepare site with versioned code
+        run: |
+          mkdir -p public
+          cp -R assets public/assets
+          cp app.js styles.css public/
+          sed "s/styles.css/styles.css?v=${GITHUB_SHA}/g; s/app.js/app.js?v=${GITHUB_SHA}/g" index.html > public/index.html
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: public
 
       - name: Deploy
         id: deployment

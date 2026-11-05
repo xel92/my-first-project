@@ -119,19 +119,35 @@ controls?.addEventListener('submit', (event) => {
   triggerFollower(nameInput.value);
 });
 
+let remoteFields = {};
 window.addEventListener('onEventReceived', (event) => {
   const detail = event.detail ?? {};
+  if (detail.listener === 'widget-button' && detail.event?.field === 'testFollower') {
+    triggerFollower(remoteFields.testName || 'DragonFriend_2026');
+    return;
+  }
   if (detail.listener !== 'follower-latest') return;
-  triggerFollower(detail.event?.name);
+  triggerFollower(detail.event?.displayName || detail.event?.name);
 });
 
-window.addEventListener('onWidgetLoad', () => {
-  setState('is-sleeping', 'StreamElements подключён. Дракон ждёт нового фолловера.');
+window.addEventListener('onWidgetLoad', (message) => {
+  remoteFields = message.detail?.fieldData || {};
+  configureFollowerSound(remoteFields);
+  document.querySelector('.greeting').textContent = remoteFields.greetingText || 'Добро пожаловать в стаю!';
+  configureFollowerText(remoteFields);
 });
 
 const params = new URLSearchParams(location.search);
 if (params.has('overlay') || params.has('obs')) document.body.classList.add('overlay');
 if (params.has('demo')) setTimeout(() => triggerFollower(params.get('demo')), 500);
+if (params.has('se') && window.parent !== window) {
+  window.addEventListener('message', (message) => {
+    if (message.source !== window.parent || message.data?.channel !== 'dragon-se-v1') return;
+    if (!['onWidgetLoad', 'onEventReceived'].includes(message.data.type)) return;
+    window.dispatchEvent(new CustomEvent(message.data.type, {detail: message.data.detail}));
+  });
+  window.parent.postMessage({channel:'dragon-se-v1', type:'ready'}, '*');
+}
 
 window.dragonAlert = triggerFollower;
 window.addEventListener('resize', fitNickname);

@@ -53,6 +53,21 @@
     "value": "",
     "group": "Изображения дракона"
   },
+  "followerSound": {
+    "type": "sound-input",
+    "label": "Звук нового фолловера",
+    "value": "",
+    "group": "Звук"
+  },
+  "soundVolume": {
+    "type": "slider",
+    "label": "Громкость (%)",
+    "value": 70,
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "group": "Звук"
+  },
   "greetingText": {
     "type": "text",
     "label": "Приветствие",

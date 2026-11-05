@@ -6,6 +6,25 @@ const statusText = document.querySelector('#status');
 
 const queue = [];
 let playing = false;
+const followerAudio = new Audio();
+followerAudio.preload = 'auto';
+let soundEnabled = false;
+
+function configureFollowerSound(settings = {}) {
+  followerAudio.pause();
+  const url = typeof settings.followerSound === 'string' ? settings.followerSound.trim() : '';
+  soundEnabled = Boolean(url);
+  if (url) followerAudio.src = url;
+  else followerAudio.removeAttribute('src');
+  const volume = Number(settings.soundVolume ?? 70);
+  followerAudio.volume = Math.max(0, Math.min(100, Number.isFinite(volume) ? volume : 70)) / 100;
+}
+
+function playFollowerSound() {
+  if (!soundEnabled || followerAudio.volume === 0) return;
+  followerAudio.currentTime = 0;
+  followerAudio.play()?.catch(error => console.warn('Follower sound could not play:', error.message));
+}
 
 const timing = Object.freeze({
   wake: 1650,
@@ -43,6 +62,7 @@ async function playFollowerAlert(followerName) {
   nickname.textContent = safeName;
   fitNickname();
 
+  playFollowerSound();
   setState('is-waking', `Дракон просыпается для ${safeName}…`);
   for (const pose of ['step1', 'middle', 'step2', 'step3', 'step4', 'step5', 'alert']) {
     widget.dataset.pose = pose;
@@ -63,6 +83,7 @@ async function playFollowerAlert(followerName) {
   }
 
   setState('is-sleeping', 'Дракон спит. Можно запустить следующую проверку.');
+  followerAudio.pause();
 }
 
 async function drainQueue() {
@@ -86,6 +107,7 @@ controls?.addEventListener('submit', (event) => {
 let fields = {};
 window.addEventListener('onWidgetLoad', (message) => {
   fields = message.detail?.fieldData || {};
+  configureFollowerSound(fields);
   document.querySelectorAll('[data-image-field]').forEach(image => {
     const url = fields[image.dataset.imageField];
     if (typeof url === 'string' && url) image.src = url;

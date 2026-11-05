@@ -27,6 +27,7 @@ js += '''
 let fields = {};
 window.addEventListener('onWidgetLoad', (message) => {
   fields = message.detail?.fieldData || {};
+  configureFollowerSound(fields);
   document.querySelectorAll('[data-image-field]').forEach(image => {
     const url = fields[image.dataset.imageField];
     if (typeof url === 'string' && url) image.src = url;
@@ -50,6 +51,8 @@ fields = {}
 for key, filename in images.items():
     fields[key] = {'type': 'image-input', 'label': filename, 'value': '', 'group': 'Изображения дракона'}
 fields.update({
+    'followerSound': {'type': 'sound-input', 'label': 'Звук нового фолловера', 'value': '', 'group': 'Звук'},
+    'soundVolume': {'type': 'slider', 'label': 'Громкость (%)', 'value': 70, 'min': 0, 'max': 100, 'step': 1, 'group': 'Звук'},
     'greetingText': {'type': 'text', 'label': 'Приветствие', 'value': 'Добро пожаловать в стаю!'},
     'testName': {'type': 'text', 'label': 'Тестовый никнейм', 'value': 'DragonFriend_2026'},
     'testFollower': {'type': 'button', 'label': 'Проверить нового фолловера', 'value': 'Запустить'},
@@ -82,7 +85,17 @@ ZIP не импортируется целиком: его нужно распа
 На настоящего фолловера реагирует событие follower-latest.
 Повторные уведомления стоят в очереди. Ник выводится безопасно как текст.
 Полностью появившееся облачко держится 5,2 секунды.
-Рык визуальный, без звука. Анимация использует восемь поз с переходами.
+ЗВУК
+В разделе «Звук» выберите файл через медиатеку StreamElements или
+загрузите свой аудиофайл. Ползунок «Громкость (%)» регулирует уровень
+от 0 до 100. Нажмите Done → Save, чтобы сохранить выбор и громкость.
+Пустое поле звука или громкость 0 отключают аудио.
+Звук запускается в начале пробуждения, включая тестовую кнопку.
+Длинный файл останавливается, когда дракон засыпает. События в очереди
+получают свой звук при начале анимации, без наложения.
+Если звук не слышен, проверьте микшер OBS и разрешение браузера на аудио.
+ОБНОВЛЕНИЕ: замените JS и FIELDS, DATA не очищайте — там настройки.
+Анимация использует восемь поз с переходами.
 Названия пунктов интерфейса могут отличаться в разных версиях SE.
 Не публикуйте URL своего overlay: используйте его только в OBS.
 '''

@@ -7,9 +7,8 @@ out = root.parent / 'Dragon-StreamElements'
 out.mkdir(exist_ok=True)
 page = (root / 'index.html').read_text()
 html = page[page.index('<main'):page.index('</main>') + 7]
-images = {'sleepImage': 'dragon-sleep.png', 'middleImage': 'dragon-drowsy.png', 'awakeImage': 'dragon-awake.png', 'cloudImage': 'follower-cloud.png'}
+images = {'cloudImage': 'follower-cloud.png'}
 embedded = html
-images.update({f'step{i}Image': f'dragon-step{i}.png' for i in range(1, 6)})
 for key, filename in images.items():
     embedded = embedded.replace('assets/' + filename, 'data:image/png;base64,' + base64.b64encode((root / 'assets' / filename).read_bytes()).decode())
     html = html.replace('src="assets/' + filename + '"', 'data-image-field="' + key + '"')
@@ -76,7 +75,7 @@ files['ИНСТРУКЦИЯ.txt'] = '''УСТАНОВКА В STREAMELEMENTS
    HTML ← HTML.txt, CSS ← CSS.txt, JS ← JS.txt,
    FIELDS ← FIELDS.json, DATA ← DATA.json. Нажмите Done.
 5. В настройках виджета откройте «Изображения дракона».
-   В каждом из девяти полей загрузите соответствующий PNG из assets.
+   В поле follower-cloud.png загрузите соответствующий PNG из assets.
    Имена полей совпадают с именами файлов. Это загрузка в медиатеку SE.
 6. Задайте размер самого Custom Widget 1200 × 600, расположите на overlay.
 7. Введите тестовый ник и нажмите «Проверить нового фолловера».
@@ -85,7 +84,7 @@ files['ИНСТРУКЦИЯ.txt'] = '''УСТАНОВКА В STREAMELEMENTS
    вставьте URL, задайте 1920 × 1080 и 60 FPS.
 
 ZIP не импортируется целиком: его нужно распаковать, вставить текст
-в пять вкладок редактора и загрузить девять картинок.
+в пять вкладок редактора и загрузить картинку облачка. Дракон встроен как SVG.
 
 Необязательный вариант: HTML-embedded.txt вместо HTML.txt содержит
 встроенные картинки, поэтому шаг 5 не нужен. Он большой;
@@ -111,7 +110,7 @@ ZIP не импортируется целиком: его нужно распа
 нет на компьютере, браузер подставит запасной шрифт.
 Сохраните настройки через Done → Save.
 ОБНОВЛЕНИЕ: замените JS и FIELDS, DATA не очищайте — там настройки.
-Анимация использует восемь поз с переходами.
+Анимация использует SVG-слои: голова, веки, челюсть, шея, тело и крыло.
 Названия пунктов интерфейса могут отличаться в разных версиях SE.
 Не публикуйте URL своего overlay: используйте его только в OBS.
 '''

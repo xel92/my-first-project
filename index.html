@@ -10,14 +10,43 @@
     <main class="preview">
       <section id="widget" class="widget is-sleeping" aria-live="polite">
         <div class="dragon-stage">
-          <img class="dragon dragon--sleep" src="assets/dragon-sleep.png" alt="Спящий дракон" />
-          <img class="dragon dragon--middle" src="assets/dragon-drowsy.png" alt="" />
-          <img class="dragon dragon--step1" src="assets/dragon-step1.png" alt="" />
-          <img class="dragon dragon--step2" src="assets/dragon-step2.png" alt="" />
-          <img class="dragon dragon--step3" src="assets/dragon-step3.png" alt="" />
-          <img class="dragon dragon--step4" src="assets/dragon-step4.png" alt="" />
-          <img class="dragon dragon--step5" src="assets/dragon-step5.png" alt="" />
-          <img class="dragon dragon--alert" src="assets/dragon-awake.png" alt="Проснувшийся дракон" />
+          <svg class="dragon-rig" viewBox="0 0 1200 600" role="img" aria-label="Дракон с плавной анимацией головы и дыхания">
+            <defs>
+              <linearGradient id="scales" x2=".3" y2="1"><stop stop-color="#78a78d"/><stop offset="1" stop-color="#32665b"/></linearGradient>
+              <linearGradient id="belly" x2="0" y2="1"><stop stop-color="#ffe4ad"/><stop offset="1" stop-color="#d8ad73"/></linearGradient>
+              <clipPath id="eyeClip"><ellipse cx="358" cy="278" rx="34" ry="39"/></clipPath>
+            </defs>
+            <g stroke="#234d45" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+              <g class="rig-body">
+                <ellipse cx="459" cy="415" rx="168" ry="111" fill="url(#scales)"/>
+                <g class="rig-wing"><path d="M440 390 Q450 238 585 277 Q550 290 545 335 Q510 317 499 363 Q468 343 440 390Z" fill="url(#belly)"/><path d="M440 390 Q472 293 585 277 M499 363 Q488 316 510 296" fill="none"/></g>
+                <path d="M575 421 C738 516 529 577 366 510 C491 540 633 487 575 421Z" fill="url(#scales)"/>
+                <path d="M367 510 Q337 492 321 520 Q346 544 395 535Z" fill="url(#belly)"/>
+                <g fill="#a5b97c" stroke="none"><ellipse cx="541" cy="374" rx="13" ry="9"/><ellipse cx="562" cy="393" rx="10" ry="7"/><ellipse cx="512" cy="369" rx="8" ry="6"/><ellipse cx="593" cy="474" rx="12" ry="7"/></g>
+              </g>
+              <path class="rig-neck" d="M350 464 Q300 400 345 306 Q380 290 409 321 Q369 400 436 466Z" fill="url(#scales)"/>
+              <path class="rig-chest" d="M371 459 Q331 400 363 334 L389 338 Q365 406 409 464Z" fill="url(#belly)" stroke-width="3"/>
+              <g class="rig-head">
+                <path d="M291 248 Q241 229 258 177 Q267 214 308 207Z M365 212 Q371 168 404 155 Q386 191 404 224Z" fill="url(#belly)"/>
+                <path d="M269 280 L223 261 L239 297 L214 309 L251 328 L236 349 L282 340" fill="url(#scales)"/>
+                <path d="M267 263 Q302 209 368 226 Q414 238 425 279 Q462 289 449 326 Q426 358 352 363 Q276 364 261 317Z" fill="url(#scales)"/>
+                <path d="M315 229 L304 201 L330 218 L346 192 L359 223" fill="#497b64"/>
+                <ellipse cx="358" cy="278" rx="34" ry="39" fill="#fff0cd" stroke="none"/>
+                <g clip-path="url(#eyeClip)">
+                  <ellipse cx="370" cy="283" rx="19" ry="30" fill="#bb7835" stroke-width="3"/>
+                  <ellipse cx="375" cy="285" rx="9" ry="23" fill="#282a21" stroke="none"/>
+                  <ellipse cx="366" cy="269" rx="6" ry="9" fill="white" stroke="none"/>
+                  <path class="rig-eyelid" d="M317 229 H399 V321 Q354 340 317 315Z" fill="#65927a" stroke="none"/>
+                </g>
+                <path d="M326 259 Q343 239 364 244" fill="none" stroke-width="7"/>
+                <g class="rig-jaw"><path d="M356 321 Q410 327 445 308 Q451 360 394 363 Q370 352 356 321Z" fill="url(#belly)"/><path d="M382 335 Q411 342 438 323" fill="none" stroke-width="3"/></g>
+                <path d="M344 310 Q369 304 391 292 Q435 272 452 298 Q468 323 434 334 Q385 347 347 330" fill="url(#belly)"/>
+                <path d="M426 297 l5 -3 M447 299 l2 3" fill="none" stroke-width="4"/>
+              </g>
+              <path d="M285 459 Q315 435 346 461 L362 493 Q314 514 279 491Z M422 466 Q454 439 480 469 L494 497 Q446 516 414 494Z" fill="url(#scales)"/>
+              <g fill="url(#belly)" stroke-width="3"><path d="M282 486 Q286 465 298 490 L300 500 L283 498Z"/><path d="M307 490 Q315 468 324 493 L324 503 L307 503Z"/><path d="M425 493 Q429 473 441 495 L440 504 L425 504Z"/><path d="M450 496 Q458 475 467 497 L466 506 L450 506Z"/></g>
+            </g>
+          </svg>
           <img class="follower-cloud" src="assets/follower-cloud.png" alt="" />
           <div class="nickname-wrap">
             <span id="nickname" class="nickname"></span>

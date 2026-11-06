@@ -46,6 +46,19 @@ body {
 }
 
 .dragon-stage { position: absolute; inset: 0; }
+.dragon-rig { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.rig-body { transform-origin:450px 510px; animation: rigBreath 4s ease-in-out infinite; }
+.rig-wing { transform-origin:440px 390px; animation: wingBreath 4s ease-in-out infinite; }
+.rig-head { transform-origin:350px 345px; transform:translate(-45px, 118px) rotate(19deg); transition:transform 1.2s cubic-bezier(.45,0,.25,1); }
+.rig-neck, .rig-chest { transform-origin:380px 465px; transform:scaleY(.65); transition:transform 1.2s cubic-bezier(.45,0,.25,1); }
+.rig-eyelid { transform:translateY(0); transition:transform .65s ease; }
+.rig-jaw { transform-origin:356px 321px; transition:transform .4s ease; }
+.is-waking .rig-head, .is-roaring .rig-head, .is-alert .rig-head { transform:translate(0,0) rotate(-8deg); }
+.is-waking .rig-neck, .is-waking .rig-chest, .is-roaring .rig-neck, .is-roaring .rig-chest, .is-alert .rig-neck, .is-alert .rig-chest { transform:scaleY(1); }
+.is-waking .rig-eyelid, .is-roaring .rig-eyelid, .is-alert .rig-eyelid { transform:translateY(-90px); }
+.is-roaring .rig-jaw { transform:rotate(15deg); }
+@keyframes rigBreath { 0%,100% {transform:scale(1);} 50% {transform:scale(1.012,1.03);} }
+@keyframes wingBreath { 0%,100% {transform:rotate(0);} 50% {transform:rotate(-2deg);} }
 
 .dragon {
   position: absolute;

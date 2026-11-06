@@ -10,7 +10,9 @@ const assert = require('assert');
  await p.fill('#name','DragonFriend'); await p.click('button');
  await p.waitForTimeout(15000);
  const result=await p.evaluate(()=>({seen, state:document.querySelector('#widget').className,images:[...document.images].every(i=>i.complete&&i.naturalWidth)}));
- assert.deepEqual(result.seen,['step1','middle','step2','step3','step4','step5','alert','step5','step4','step3','step2','middle','step1','sleep']);
+ assert.deepEqual(result.seen,[]);
+ assert.equal(await p.locator('.dragon-rig .rig-head').count(),1);
+ assert.equal(await p.locator('img.dragon').count(),0);
  assert.equal(result.state,'widget is-sleeping');assert(result.images);
  console.log(JSON.stringify(result));
  } finally {await browser.close();}

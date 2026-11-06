@@ -34,6 +34,7 @@ jobs:
           mkdir -p public
           cp -R assets public/assets
           cp app.js styles.css public/
+          cp motion-study.html public/
           sed "s/styles.css/styles.css?v=${GITHUB_SHA}/g; s/app.js/app.js?v=${GITHUB_SHA}/g" index.html > public/index.html
 
       - name: Upload static site
